@@ -9,7 +9,6 @@ def load_from_json(file_path):
     with open(file_path, 'r') as f:
         return json.load(f)
     
-
 def check_overdue_tasks(projects):
     today = datetime.now().date()
     for project in projects:
