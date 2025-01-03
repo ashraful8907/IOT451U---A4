@@ -1,5 +1,5 @@
 class Task:
-    def __init__(title, status = 'Not Started', due_date = None, priority = 'Medium', assignee = None):
+    def __init__(self, title, status = 'Not Started', due_date = None, priority = 'Medium', assignee = None):
         self.title = title
         self.status = status
         self.due_date = due_date

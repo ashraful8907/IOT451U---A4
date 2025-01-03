@@ -1,3 +1,10 @@
+'''
+Note to self:
+Where to start on Sunday (or Saturday if you're that cool and bothered),
+- Issue with loading and saving data, saving into wrong place, not loading old data
+- Improve layout and presentation of the GUI with Tkinter - is it even possible to make it look nice - probably search it up.
+- Add tests into the code to make sure it works
+'''
 from project import Project  # Importing the Project class
 from task import Task  # Importing the Task class
 from team_member import TeamMember  # Importing the TeamMember class
@@ -8,7 +15,7 @@ from tkinter import ttk, messagebox
 from GUI import main_window
 
 projects = []  # List to store project instances
-data_file = 'example.json'  # File name for saving/loading data
+data_file = 'example.json'  # File name for saving/loading data - THERE IS AN ISSUE WITH LOADING DATA SOMEWHERE.
 
  # Load data from previous session if available
 def load_projects(data_file):

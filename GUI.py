@@ -106,28 +106,30 @@ def main_window(projects, save_projects):
         due_date_entry = tk.Entry(add_task_window)
         due_date_entry.pack()
 
-        tk.Label(add_task_window, text="Priority (High/Medium/Low):").pack(pedy=5)
+        tk.Label(add_task_window, text="Priority (High/Medium/Low):").pack(pady=5)
         priority_entry = tk.Entry(add_task_window)
         priority_entry.pack()
 
-        tk.Label(add_task_window, text="Select a Project:").pack(pedy=5)
+        tk.Label(add_task_window, text="Select a Project:").pack(pady=5)
         project_dropdown = ttk.Combobox(add_task_window, values=[proj.name for proj in projects])
         project_dropdown.pack()
         
-        tk.Label(add_task_window, text="Save Task", command=save_task).pack(pady=10)
+        tk.Button(add_task_window, text="Save Task", command=save_task).pack(pady=10)
 
     actions = [
-        ("Create Project", create_project)
-        ()
-        ()
-        ()
-        ()
-        ()
-        ()
-        ()
+        ("Create Project", create_project),
+        ("View Projects", view_projects),
+        ("Add Task to Project", add_task),
+        ("Assign Task to Team Member", lambda: print("Assign task")),
+        ("View Tasks in Project", lambda: print("View tasks")),
+        ("View Team Member Workload", lambda: print("View workload")),
+        ("Filter by Category", lambda: print("Filter tasks")),
+        ("Check Overdue Tasks", lambda: print("Check overdue tasks")),
 
     ]
     
+    for i, (label, command) in enumerate(actions):
+        tk.Button(button_frame, text=label, command=command, width=25).grid(row = i // 2, column = i % 2, padx=10, pady=10)
 
     def on_exit():
         save_projects()
