@@ -5,6 +5,10 @@ from utils import load_from_json, save_to_json  # Utility functions for file I/O
 from utils import check_overdue_tasks  # Utility function for overdue task checking
 import tkinter as tk
 from tkinter import ttk, messagebox
+from GUI import main_window
+
+projects = []  # List to store project instances
+data_file = 'example.json'  # File name for saving/loading data
 
  # Load data from previous session if available
 def load_projects(data_file):
@@ -31,15 +35,17 @@ def load_projects(data_file):
         print(f"Error loading data: {e}")
     return projects
 
+def save_projects():
+    save_to_json(data_file, [proj.to_dict() for proj in projects])
+    print("Data saved successfully.")
+
 def main():
     # Displaying the application title and menu
     print("\n" + "-" * 30)
     print("Project Management App")
     print("-" * 30)
 
-    projects = []  # List to store project instances
-    DATA_FILE = 'example.json'  # File name for saving/loading data
-    projects = load_projects(DATA_FILE)  # Load projects at the start
+    projects = load_projects(data_file)  # Load projects at the start
 
     # Main loop for user interaction
     while True:
@@ -163,7 +169,7 @@ def main():
             confirm = input("Are you sure you want to exit? (yes/no): ").lower()
             if confirm == 'yes':
                 # Save data to JSON file
-                save_to_json(DATA_FILE, [proj.to_dict() for proj in projects])
+                save_to_json(data_file, [proj.to_dict() for proj in projects])
                 print("Data saved. Exiting...")
                 break  # Exit the loop and end program
 
@@ -171,4 +177,5 @@ def main():
             print('Invalid choice. Please try again.')  # Handle invalid menu choice
 
 if __name__ == "__main__":
-    main()  # Run the main function
+    load_projects(data_file)
+    main_window(projects, save_projects)
