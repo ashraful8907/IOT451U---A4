@@ -17,9 +17,13 @@ def save_projects():
 def main_window(projects, save_projects):
     root = tk.Tk()
     root.title("Project Management App")
-    root.geometry("800x600")
+    root.geometry("900x600")
 
-    tk.Label(root, text='Project Management App', font=("Arial", 24)).pack(pady=20)
+    tk.Label(root, text='Project Management App', font=("Arial", 24, "bold")).pack(pady=20)
+
+    # Frame for buttons
+    button_frame = tk.Frame(root)
+    button_frame.pack(pady=20)
 
     def is_valid_date(date_str):
         try:
@@ -31,6 +35,7 @@ def main_window(projects, save_projects):
     def view_projects():
         view_projects_window = tk.Toplevel(root)
         view_projects_window.title("All Projects")
+        view_projects_window.geometry("700x400")
         columns = ("Name", "Description", "Deadline")
         tree = ttk.Treeview(view_projects_window, columns=columns, show = "headings")
         for col in columns:
@@ -40,7 +45,7 @@ def main_window(projects, save_projects):
             else:
                 tree.column(col, width=150)
         for project in projects:
-            tree.insert("", tk.END, values=(project.name, project.desc, project .deadline))
+            tree.insert("", tk.END, values=(project.name, project.desc, project.deadline))
         tree.pack(fill=tk.BOTH, expand=True)
     
     def create_project():
@@ -60,6 +65,7 @@ def main_window(projects, save_projects):
 
         create_project_window = tk.Toplevel(root)
         create_project_window.title("New Project")
+        create_project_window.geometry("400x300")
         tk.Label(create_project_window, text = "Name:").pack(pady=5)
         name_entry = tk.Entry(create_project_window)
         name_entry.pack()
@@ -69,10 +75,59 @@ def main_window(projects, save_projects):
         tk.Label(create_project_window, text="Deadline (YYYY-MM-DD):").pack(pady=5)
         deadline_entry = tk.Entry(create_project_window)
         deadline_entry.pack()
-        tk.Button(create_project_window, text="Save", command=save_new_project).pack(pady=5)
+        tk.Button(create_project_window, text="Save", command=save_new_project).pack(pady=10)
 
     tk.Button(root, text="View Projects", command=view_projects).pack(pady=10)
     tk.Button(root, text="Create Project", command=create_project).pack(pady=10)
+
+    def add_task():
+        def save_task():
+            task_name = task_name_entry.get()
+            due_date = due_date_entry.get()
+            priority = priority_entry.get()
+            project_index = project_dropdown.current()
+            if project_index < 0:
+                messagebox.showerror("Error", "Select a project.")
+                return
+            task = Task(task_name, due_date=due_date, priority=priority)
+            projects[project_index].add_task(task)
+            messagebox.showinfo("Success", f"Task {task_name} successfully added!")
+            add_task_window.destroy()
+        
+        add_task_window = tk.Toplevel(root)
+        add_task_window.title("Add Task")
+        add_task_window.geometry("400x400")
+
+        tk.Label(add_task_window, text="Task Name:").pack(pady=5)
+        task_name_entry = tk.Entry(add_task_window)
+        task_name_entry.pack()
+
+        tk.Label(add_task_window, text="Due Date (YYYY-MM-DD):").pack(pady=5)
+        due_date_entry = tk.Entry(add_task_window)
+        due_date_entry.pack()
+
+        tk.Label(add_task_window, text="Priority (High/Medium/Low):").pack(pedy=5)
+        priority_entry = tk.Entry(add_task_window)
+        priority_entry.pack()
+
+        tk.Label(add_task_window, text="Select a Project:").pack(pedy=5)
+        project_dropdown = ttk.Combobox(add_task_window, values=[proj.name for proj in projects])
+        project_dropdown.pack()
+        
+        tk.Label(add_task_window, text="Save Task", command=save_task).pack(pady=10)
+
+    actions = [
+        ("Create Project", create_project)
+        ()
+        ()
+        ()
+        ()
+        ()
+        ()
+        ()
+
+    ]
+    
 
     def on_exit():
         save_projects()
