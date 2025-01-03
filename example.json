@@ -1,7 +1,7 @@
 [
     {
         "name": "Website Redesign",
-        "description": "Redesign the company website.",
+        "desc": "Redesign the company website.",
         "deadline": "2025-01-15",
         "tasks": [
             {

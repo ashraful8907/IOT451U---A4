@@ -16,19 +16,26 @@ def load_projects(data_file):
     try:
         project_data = load_from_json(data_file)  # Load JSON data
         for proj in project_data:
+            # Handle missing 'desc' and other fields gracefully
+            name = proj.get('name', 'Unnamed Project')
+            desc = proj.get('desc', 'No description provided')  # Default description
+            deadline = proj.get('deadline', 'No deadline')  # Default deadline if missing
+            
             # Create a Project object
-            project = Project(proj['name'], proj.get('desc', ''), proj.get('deadline', ''))
+            project = Project(name, desc, deadline)
+            
             for t in proj.get('tasks', []):  # Iterate over tasks
-            # Create Task objects
+                # Create Task objects with default values for missing fields
                 task = Task(
-                    t['title'],
+                    t.get('title', 'Unnamed Task'),
                     status=t.get('status', 'Not Started'),
                     due_date=t.get('due_date', None),
                     priority=t.get('priority', 'Medium'),
                     assignee=TeamMember(t['assignee']) if t.get('assignee') else None
                 )
-            project.add_task(task)
-            projects.append(project)  # Add project to list
+                project.add_task(task)  # Add task to the project
+            
+            projects.append(project)  # Add project to the list
     except FileNotFoundError:
         print('No saved data found. Starting new.')
     except (KeyError, ValueError) as e:
