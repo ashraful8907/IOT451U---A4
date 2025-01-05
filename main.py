@@ -13,13 +13,14 @@ from utils import check_overdue_tasks  # Utility function for overdue task check
 import tkinter as tk
 from tkinter import ttk, messagebox
 from GUI import main_window
+import os
 
 projects = []  # List to store project instances
-data_file = 'example.json'  # File name for saving/loading data - THERE IS AN ISSUE WITH LOADING DATA SOMEWHERE.
+data_file = os.path.join(os.path.dirname(__file__), 'example.json')  # File name for saving/loading data 
 
  # Load data from previous session if available
 def load_projects(data_file):
-    projects = []  # List to store loaded projects
+    global projects
     try:
         project_data = load_from_json(data_file)  # Load JSON data
         for proj in project_data:
@@ -189,6 +190,9 @@ def main():
 
         else:
             print('Invalid choice. Please try again.')  # Handle invalid menu choice
+
+
+print(f"Data file path: {data_file}")
 
 if __name__ == "__main__":
     load_projects(data_file)

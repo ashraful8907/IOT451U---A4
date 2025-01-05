@@ -1,139 +1,125 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from project import Project
-from task import Task
-from team_member import TeamMember
-from utils import load_from_json, save_to_json
-import datetime
+import customtkinter as ctk
 
-DATA_FILE = "example.json"
+# Global Font
+global_font = ("Helvetica Neue", 18)
 
-# Initiate global project list
-projects = []
+# Initialize Application
+ctk.set_appearance_mode("System")  # "Dark", "Light", or "System"
+ctk.set_default_color_theme("blue")  # Default theme
 
-def save_projects():
-    save_to_json(DATA_FILE, [proj.to_dict() for proj in projects])
+root = ctk.CTk()
+root.title("Project Management App X")
+root.geometry("1000x700")
+root.configure(bg="#1C1C1E")  # Dark gray background (default)
 
-def main_window(projects, save_projects):
-    root = tk.Tk()
-    root.title("Project Management App")
-    root.geometry("900x600")
+# Header Section
+header_frame = ctk.CTkFrame(root, fg_color="#202124", height=100, corner_radius=15)
+header_frame.pack(fill="x", pady=10)
+header_label = ctk.CTkLabel(
+    header_frame,
+    text="Welcome to Project Management X",
+    font=("Helvetica Neue", 28, "bold"),
+    text_color="white",
+)
+header_label.pack(pady=20)
 
-    tk.Label(root, text='Project Management App', font=("Arial", 24, "bold")).pack(pady=20)
+# Stats Section
+stats_frame = ctk.CTkFrame(root, fg_color="#2E2E33", corner_radius=15)
+stats_frame.pack(pady=20, padx=20, fill="x")
+stats_label = ctk.CTkLabel(
+    stats_frame,
+    text="Total Projects: 0 | Total Tasks: 0 | Completed Tasks: 0",
+    font=global_font,
+    text_color="white",
+)
+stats_label.pack(pady=10)
 
-    # Frame for buttons
-    button_frame = tk.Frame(root)
-    button_frame.pack(pady=20)
+# Function to Update Frame Colors Dynamically
+def update_frame_colors():
+    """Adjust frame colors for light and dark modes."""
+    if ctk.get_appearance_mode() == "Light":
+        # Light Mode Colors
+        root.configure(bg="#F5F5F5")  # Light gray background
+        header_frame.configure(fg_color="#E0E0E0")  # Light header box
+        stats_frame.configure(fg_color="#FFFFFF")  # White for stats
+        button_frame.configure(fg_color="#F0F0F0")  # Light gray button section
+        footer_frame.configure(fg_color="#E0E0E0")  # Light footer box
+        header_label.configure(text_color="black")  # Dark text in light mode
+        stats_label.configure(text_color="black")
+        footer_label.configure(text_color="black")
+    else:
+        # Dark Mode Colors
+        root.configure(bg="#1C1C1E")  # Dark background
+        header_frame.configure(fg_color="#202124")  # Dark header box
+        stats_frame.configure(fg_color="#2E2E33")  # Darker gray for stats
+        button_frame.configure(fg_color="#2E2E33")  # Dark gray button section
+        footer_frame.configure(fg_color="#202124")  # Dark footer box
+        header_label.configure(text_color="white")  # Light text in dark mode
+        stats_label.configure(text_color="white")
+        footer_label.configure(text_color="#A1A1A6")
 
-    def is_valid_date(date_str):
-        try:
-            datetime.datetime.strptime(date_str, "%Y-%m-%d")
-            return True
-        except ValueError:
-            return False
+# Toggle Light/Dark Mode
+def toggle_mode():
+    current_mode = ctk.get_appearance_mode()
+    ctk.set_appearance_mode("Light" if current_mode == "Dark" else "Dark")
+    update_frame_colors()  # Update frame colors dynamically
 
-    def view_projects():
-        view_projects_window = tk.Toplevel(root)
-        view_projects_window.title("All Projects")
-        view_projects_window.geometry("700x400")
-        columns = ("Name", "Description", "Deadline")
-        tree = ttk.Treeview(view_projects_window, columns=columns, show = "headings")
-        for col in columns:
-            tree.heading(col, text=col)
-            if col == "Description":
-                tree.column(col, width=300)
-            else:
-                tree.column(col, width=150)
-        for project in projects:
-            tree.insert("", tk.END, values=(project.name, project.desc, project.deadline))
-        tree.pack(fill=tk.BOTH, expand=True)
-    
-    def create_project():
-        def save_new_project():
-            name = name_entry.get()
-            desc = desc_entry.get()
-            deadline = deadline_entry.get()
-            if not name or not deadline:
-                messagebox.showerror("Error", "Name and deadline are required.")
-                return
-            if not is_valid_date(deadline):
-                messagebox.showerror("Error", "Invalid date format. Use YYYY-MM-DD.")
-                return
-            projects.append(Project(name, desc, deadline))
-            messagebox.showinfo("Success", f"Project {name} created!")
-            create_project_window.destroy()
+# Button Section
+button_frame = ctk.CTkFrame(root, fg_color="#2E2E33", corner_radius=15)
+button_frame.pack(pady=20, padx=20, expand=True)
 
-        create_project_window = tk.Toplevel(root)
-        create_project_window.title("New Project")
-        create_project_window.geometry("400x300")
-        tk.Label(create_project_window, text = "Name:").pack(pady=5)
-        name_entry = tk.Entry(create_project_window)
-        name_entry.pack()
-        tk.Label(create_project_window, text="Description:").pack(pady=5)
-        desc_entry = tk.Entry(create_project_window)
-        desc_entry.pack()
-        tk.Label(create_project_window, text="Deadline (YYYY-MM-DD):").pack(pady=5)
-        deadline_entry = tk.Entry(create_project_window)
-        deadline_entry.pack()
-        tk.Button(create_project_window, text="Save", command=save_new_project).pack(pady=10)
+actions = [
+    ("Create Project", lambda: print("Create Project")),
+    ("View Projects", lambda: print("View Projects")),
+    ("Add Task to Project", lambda: print("Add Task")),
+    ("Assign Task to Team Member", lambda: print("Assign Task")),
+    ("View Tasks in Project", lambda: print("View Tasks")),
+    ("View Team Member Workload", lambda: print("View Workload")),
+    ("Filter by Category", lambda: print("Filter Tasks")),
+    ("Check Overdue Tasks", lambda: print("Check Overdue")),
+]
 
-    tk.Button(root, text="View Projects", command=view_projects).pack(pady=10)
-    tk.Button(root, text="Create Project", command=create_project).pack(pady=10)
+# Create Buttons
+for i, (label, command) in enumerate(actions):
+    column = 0 if i < 4 else 1
+    row = i if i < 4 else i - 4
+    ctk.CTkButton(
+        button_frame,
+        text=label,
+        command=command,
+        font=global_font,
+        corner_radius=15,
+        width=250,
+        height=50,
+        fg_color="#007AFF",
+        hover_color="#005BB5",
+    ).grid(row=row, column=column, padx=30, pady=20)
 
-    def add_task():
-        def save_task():
-            task_name = task_name_entry.get()
-            due_date = due_date_entry.get()
-            priority = priority_entry.get()
-            project_index = project_dropdown.current()
-            if project_index < 0:
-                messagebox.showerror("Error", "Select a project.")
-                return
-            task = Task(task_name, due_date=due_date, priority=priority)
-            projects[project_index].add_task(task)
-            messagebox.showinfo("Success", f"Task {task_name} successfully added!")
-            add_task_window.destroy()
-        
-        add_task_window = tk.Toplevel(root)
-        add_task_window.title("Add Task")
-        add_task_window.geometry("400x400")
+# Add Toggle Button for Light/Dark Mode
+toggle_button = ctk.CTkButton(
+    stats_frame,
+    text="Toggle Light/Dark Mode",
+    font=("Helvetica Neue", 14),
+    command=toggle_mode,
+    corner_radius=10,
+    fg_color="#007AFF",
+    hover_color="#005BB5",
+)
+toggle_button.pack(pady=10)
 
-        tk.Label(add_task_window, text="Task Name:").pack(pady=5)
-        task_name_entry = tk.Entry(add_task_window)
-        task_name_entry.pack()
+# Footer Section
+footer_frame = ctk.CTkFrame(root, fg_color="#202124", height=50, corner_radius=15)
+footer_frame.pack(fill="x", pady=10, side="bottom")
+footer_label = ctk.CTkLabel(
+    footer_frame,
+    text="Project Management App X | Version 1.0 | © 2025",
+    font=("Helvetica Neue", 12),
+    text_color="#A1A1A6",
+)
+footer_label.pack(pady=10)
 
-        tk.Label(add_task_window, text="Due Date (YYYY-MM-DD):").pack(pady=5)
-        due_date_entry = tk.Entry(add_task_window)
-        due_date_entry.pack()
+# Initial Frame Color Update
+update_frame_colors()  # Adjust colors when the app starts
 
-        tk.Label(add_task_window, text="Priority (High/Medium/Low):").pack(pady=5)
-        priority_entry = tk.Entry(add_task_window)
-        priority_entry.pack()
-
-        tk.Label(add_task_window, text="Select a Project:").pack(pady=5)
-        project_dropdown = ttk.Combobox(add_task_window, values=[proj.name for proj in projects])
-        project_dropdown.pack()
-        
-        tk.Button(add_task_window, text="Save Task", command=save_task).pack(pady=10)
-
-    actions = [
-        ("Create Project", create_project),
-        ("View Projects", view_projects),
-        ("Add Task to Project", add_task),
-        ("Assign Task to Team Member", lambda: print("Assign task")),
-        ("View Tasks in Project", lambda: print("View tasks")),
-        ("View Team Member Workload", lambda: print("View workload")),
-        ("Filter by Category", lambda: print("Filter tasks")),
-        ("Check Overdue Tasks", lambda: print("Check overdue tasks")),
-
-    ]
-    
-    for i, (label, command) in enumerate(actions):
-        tk.Button(button_frame, text=label, command=command, width=25).grid(row = i // 2, column = i % 2, padx=10, pady=10)
-
-    def on_exit():
-        save_projects()
-        root.destroy()
-
-    root.protocol("WM_DELETE_WINDOW", on_exit)
-    root.mainloop()
+# Run the Application
+root.mainloop()
