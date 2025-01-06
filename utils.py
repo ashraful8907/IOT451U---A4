@@ -9,20 +9,18 @@ def load_from_json(file_path):
     with open(file_path, 'r') as f:
         return json.load(f)
     
+from datetime import datetime
+
 def check_overdue_tasks(projects):
-    today = datetime.now().date()
+    """Checks for overdue tasks in all projects."""
+    overdue_tasks = []
+    today = datetime.now().date()  # Current date
+
     for project in projects:
-        print(f"\nOverdue Tasks in Project: {project.name}")
-        
-        if not project.tasks:  # Check if the project has no tasks
-            print("No tasks in this project.")
-            continue  # Skip to the next project
-
-        overdue_found = False  # Flag to track if overdue tasks exist
         for task in project.tasks:
-            if task.due_date and datetime.strptime(task.due_date, "%Y-%m-%d").date() < today:
-                overdue_found = True
-                print(f"- {task.title} (Due: {task.due_date}, Status: {task.status})")
+            # Check if due_date is before today and task is not completed
+            if task.due_date.date() < today and task.status != "Completed":
+                overdue_tasks.append(f"{task.name} (Due: {task.due_date.strftime('%Y-%m-%d')})")
 
-        if not overdue_found:  # If no overdue tasks are found
-            print("No overdue tasks in this project.")
+    return overdue_tasks
+
