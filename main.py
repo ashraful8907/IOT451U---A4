@@ -4,6 +4,12 @@ from utils import load_from_json, save_to_json  # Utility functions for file I/O
 import os
 from GUI import main_window  # Import the GUI function
 
+'''
+To dos:
+- Fix stats number
+- Fix update_tasks
+'''
+
 # Global Variables
 projects = []  # List to store project instances
 data_file = os.path.join(os.path.dirname(__file__), 'example.json')  # Data file path
