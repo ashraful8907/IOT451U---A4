@@ -1,18 +1,17 @@
-# main.py #focus on the assign window thar doesnt resize.
+# main.py 
 from classes import Task, Project, TeamMember
 from utils import load_from_json, save_to_json  # Utility functions for file I/O
 import os
 from GUI import main_window  # Import the GUI function
+import customtkinter as ctk
 
-'''
-To dos:
-- Fix stats number
-- Fix update_tasks
-'''
+
+ctk.set_widget_scaling(1.0)
+ctk.set_window_scaling(1.0)
 
 # Global Variables
 projects = []  # List to store project instances
-data_file = os.path.join(os.path.dirname(__file__), 'example.json')  # Data file path
+data_file = os.path.join(os.path.dirname(__file__), 'mock.json')  # Data file path
 
 # Function to Load Projects from File
 def load_projects(data_file):

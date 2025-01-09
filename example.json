@@ -5,14 +5,6 @@
         "deadline": "2025-05-12",
         "tasks": [
             {
-                "title": "Task 1",
-                "description": "First Task",
-                "due_date": "2025-01-01",
-                "assignee": "Emma",
-                "status": "Not Started",
-                "priority": "High"
-            },
-            {
                 "title": "Task 2",
                 "description": "Second Task",
                 "due_date": "2025-01-15",

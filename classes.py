@@ -64,6 +64,8 @@ class Task(BaseEntity):
 class Project(BaseEntity):
     def __init__(self, name, description, deadline):
         super().__init__(name, description)
+        if isinstance(deadline, datetime):
+            deadline = deadline.strftime("%Y-%m-%d")
         self.__deadline = datetime.strptime(deadline, "%Y-%m-%d")
         self.__tasks = []
 

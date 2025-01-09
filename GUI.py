@@ -2,16 +2,24 @@ import customtkinter as ctk
 from tkinter import messagebox, Toplevel
 from classes import Project, Task, TeamMember
 from datetime import datetime
+from app import show_analytics_visualisations
+
+ctk.set_widget_scaling(1.0)  # Disable widget DPI scaling
+ctk.set_window_scaling(1.0)  # Disable window DPI scaling
 
 # Main GUI Function
 def main_window(projects, save_projects):
-    # Initialize Application
+    # Initialise Application
     ctk.set_appearance_mode("System")
     ctk.set_default_color_theme("blue")
 
     root = ctk.CTk()
     root.title("Project Management App")
     root.geometry("1000x700")
+
+     # Statistics Label
+    stats_label = ctk.CTkLabel(root, text="")
+    stats_label.pack(pady=10)
 
     # Helper Functions
     def update_stats():
@@ -30,38 +38,43 @@ def main_window(projects, save_projects):
         def save_new_project():
             name = project_name_entry.get()
             description = project_desc_entry.get()
-            deadline = project_deadline_entry.get()
-            if not name or not deadline:
+            deadline_date = project_deadline_entry.get()
+            if not name or not deadline_date:
                 messagebox.showerror("Error", "Project name and deadline are required.")
                 return
             try:
-                new_project = Project(name=name, description=description, deadline=deadline)
-                projects.append(new_project)
-                update_stats()
-                create_window.destroy()
-                messagebox.showinfo("Success", f"Project '{name}' created successfully!")
-            except ValueError as e:
-                messagebox.showerror("Error", str(e))
+                deadline_str = deadline_date if isinstance(deadline_date, str) else deadline_date.strftime("%Y-%m-%d")
+                deadline_date = datetime.strptime(deadline_str, "%Y-%m-%d")
+            except ValueError:
+                messagebox.showerror("Error", "Invalid date format. Use YYYY-MM-DD.")
+                return
+            new_project = Project(name, description, deadline_str)
+            projects.append(new_project)
+            update_stats()
+            new_project_window.destroy()
+            messagebox.showinfo("Success", f"Project {name} created!")
 
-        create_window = Toplevel(root)
-        create_window.title("Create New Project")
-        create_window.geometry("400x300")
+        new_project_window = Toplevel(root)
+        new_project_window.title("Create New Project")
+        new_project_window.geometry("400x400")
 
-        ctk.CTkLabel(create_window, text="Project Name:", text_color= "black").pack(pady=5)
-        project_name_entry = ctk.CTkEntry(create_window, width=300)
-        project_name_entry.pack()
+        project_name_label = ctk.CTkLabel(new_project_window, text="Project Name:", text_color="black")
+        project_name_label.pack(pady=5)
+        project_name_entry = ctk.CTkEntry(new_project_window)
+        project_name_entry.pack(pady=5)
 
-        ctk.CTkLabel(create_window, text="Description:", text_color= "black").pack(pady=5)
-        project_desc_entry = ctk.CTkEntry(create_window, width=300)
-        project_desc_entry.pack()
+        project_desc_label = ctk.CTkLabel(new_project_window, text="Project Description:", text_color="black")
+        project_desc_label.pack(pady=5)
+        project_desc_entry = ctk.CTkEntry(new_project_window)
+        project_desc_entry.pack(pady=5)
 
-        ctk.CTkLabel(create_window, text="Deadline (YYYY-MM-DD):", text_color= "black").pack(pady=5)
-        project_deadline_entry = ctk.CTkEntry(create_window, width=300)
-        project_deadline_entry.pack()
+        project_deadline_label = ctk.CTkLabel(new_project_window, text="Project Deadline (YYYY-MM-DD):", text_color="black")
+        project_deadline_label.pack(pady=5)
+        project_deadline_entry = ctk.CTkEntry(new_project_window)
+        project_deadline_entry.pack(pady=5)
 
-        ctk.CTkButton(
-            create_window, text="Save", command=save_new_project, fg_color="#007AFF"
-        ).pack(pady=10)
+        save_button = ctk.CTkButton(new_project_window, text="Save Project", command=save_new_project)
+        save_button.pack(pady=20)
 
     def add_task():
         """Add a new task to a selected project."""
@@ -124,127 +137,172 @@ def main_window(projects, save_projects):
         ).pack(pady=10)
 
     def assign_task():
-        """Assign a task to a team member."""
-        
-        # Function to save the selected task and assign it to a team member
         def save_assignee():
             assignee_name = assignee_entry.get()
             project_name = project_dropdown.get()
             task_name = task_dropdown.get()
 
-            if not project_name:
-                messagebox.showerror("Error", "Please select a project.")
-                return
-            if not task_name:
-                messagebox.showerror("Error", "Please select a task.")
-                return
-            if not assignee_name.strip():
-                messagebox.showerror("Error", "Please enter a valid assignee name.")
+            if not project_name or not task_name:
+                messagebox.showerror("Error", "Please select a project and task.")
                 return
 
-            # Find the selected project
             selected_project = next((proj for proj in projects if proj.name == project_name), None)
-            if not selected_project:
-                messagebox.showerror("Error", f"Project '{project_name}' not found.")
-                return
-
-            # Find the selected task in the project
             selected_task = next((task for task in selected_project.tasks if task.name == task_name), None)
+
             if not selected_task:
-                messagebox.showerror("Error", f"Task '{task_name}' not found in project '{project_name}'.")
+                messagebox.showerror("Error", "Selected task not found.")
                 return
 
-            # Assign the task to the entered team member
             selected_task.assignee = TeamMember(name=assignee_name, description="", role="Assigned")
-            messagebox.showinfo("Success", f"Task '{selected_task.name}' successfully assigned to {assignee_name}.")
+            messagebox.showinfo("Success", f"Task '{task_name}' assigned to {assignee_name}.")
             assign_window.destroy()
 
-        # Function to update the tasks dropdown based on the selected project
-        def update_tasks(event=None):
-            project_name = project_dropdown.get()
-            print(f"Project selected: {project_name}")  # Debug: Log selected project
+        def update_tasks(selected_project_name):
+            """Update the task dropdown based on the selected project."""
+            selected_project = next((proj for proj in projects if proj.name == selected_project_name), None)
 
-            # Find the project in the list
-            selected_project = next((proj for proj in projects if proj.name == project_name), None)
-            if selected_project:
-                # Populate the task dropdown with the names of the tasks in the project
+            if selected_project and selected_project.tasks:
                 task_names = [task.name for task in selected_project.tasks]
-                if task_names:
-                    task_dropdown.configure(values=task_names)
-                    task_dropdown.set("")  # Reset to no task selected
-                else:
-                    task_dropdown.configure(values=["No tasks available"])
-                    task_dropdown.set("No tasks available")
-                print(f"Tasks in project '{project_name}': {task_names}")  # Debug: Log tasks
-            else:
-                task_dropdown.configure(values=[])
+                task_dropdown.configure(values=task_names)
                 task_dropdown.set("")
-                print(f"Project '{project_name}' not found.")  # Debug: Log error
+            else:
+                task_dropdown.configure(values=["No tasks available"])
+                task_dropdown.set("No tasks available")
 
-        # Create the Assign Task window
         assign_window = Toplevel(root)
         assign_window.title("Assign Task")
-        assign_window.geometry("500x400")
+        assign_window.geometry("500x500")
 
-        # Select Project Dropdown
-        ctk.CTkLabel(assign_window, text="Select Project:", text_color="black").pack(pady=10)
-        project_dropdown = ctk.CTkComboBox(assign_window, values=[proj.name for proj in projects])
+        # Project Dropdown
+        ctk.CTkLabel(assign_window, text="Select Project", text_color="black").pack(pady=10)
+        project_dropdown = ctk.CTkComboBox(
+            assign_window,
+            values=[proj.name for proj in projects],
+            command=update_tasks,  # Call update_tasks when a project is selected
+        )
         project_dropdown.pack(pady=5)
-        project_dropdown.bind("<<ComboboxSelected>>", update_tasks)  # Bind dropdown selection to update_tasks
 
-        # Select Task Dropdown
-        ctk.CTkLabel(assign_window, text="Select Task:", text_color="black").pack(pady=10)
-        task_dropdown = ctk.CTkComboBox(assign_window, values=[])  # Initially empty
+        # Task Dropdown
+        ctk.CTkLabel(assign_window, text="Select Task", text_color="black").pack(pady=10)
+        task_dropdown = ctk.CTkComboBox(assign_window, values=[])
         task_dropdown.pack(pady=5)
 
-        # Enter Assignee Name
-        ctk.CTkLabel(assign_window, text="Assignee Name:", text_color="black").pack(pady=10)
-        assignee_entry = ctk.CTkEntry(assign_window, width=300)
+        # Assignee Entry
+        ctk.CTkLabel(assign_window, text="Assign Team Member", text_color="black").pack(pady=10)
+        assignee_entry = ctk.CTkEntry(assign_window)
         assignee_entry.pack(pady=5)
 
         # Assign Button
-        ctk.CTkButton(
-            assign_window,
-            text="Assign Task",
-            command=save_assignee,
-            fg_color="#007AFF"
-        ).pack(pady=20)
+        ctk.CTkButton(assign_window, text="Assign Task", command=save_assignee).pack(pady=20)
 
-        # Preload the first project and call update_tasks
+        # Initialise the first project selection and its tasks
         if projects:
-            project_dropdown.set(projects[0].name)  # Pre-select the first project
-            update_tasks()  # Populate tasks for the first project
+            first_project_name = projects[0].name
+            project_dropdown.set(first_project_name)
+            update_tasks(first_project_name)
+
+    def view_tasks(root, projects):
+        """Display tasks grouped by project with collapsible sections."""
+        tasks_window = Toplevel(root)
+        tasks_window.title("View Tasks")
+        tasks_window.geometry("600x800")
+
+        for project in projects:
+            project_frame = ctk.CTkFrame(tasks_window, corner_radius=10)
+            project_frame.pack(fill="x", padx=10, pady=5)
+
+            ctk.CTkLabel(
+                project_frame, text=f"Project: {project.name}", font=("Helvetica Neue", 16, "bold"), text_color="white"
+            ).pack(anchor="w", padx=10, pady=5)
+
+            task_frame = ctk.CTkFrame(project_frame, fg_color="transparent")
+            [ctk.CTkLabel(task_frame, text=f"  - {task.name or 'Unnamed Task'} | Status: {task.status} | Due: {task.due_date} | Priority: {task.priority}", font=("Helvetica Neue", 12), text_color="white").pack(anchor="w", padx=10) for task in project.tasks]
+            task_frame.pack_forget()
+
+            ctk.CTkButton(
+                project_frame, text="Show Tasks",
+                command=lambda f=task_frame: f.pack(fill="x", padx=10, pady=5) if not f.winfo_ismapped() else f.pack_forget(),
+                width=100, height=30
+            ).pack(anchor="e", padx=10, pady=5)
 
 
-    def view_tasks():
-        """Display tasks grouped by project."""
-        view_tasks_window = Toplevel(root)
-        view_tasks_window.title("View Tasks")
-        view_tasks_window.geometry("600x400")
-
-        for proj in projects:
-            ctk.CTkLabel(view_tasks_window, text=f"Project: {proj.name}", font=("Helvetica Neue", 16), text_color= "black").pack(pady=5)
-            for task in proj.tasks:
-                task_info = (f"  {task.name} | Status: {task.status} | "
-                             f"Due: {task.due_date.strftime('%Y-%m-%d')} | Priority: {task.priority}")
-                ctk.CTkLabel(view_tasks_window, text=task_info, text_color= "black").pack()
-
-    def view_workload():
-        """Display workload for all team members."""
+    def view_workload(root, projects):
+        """Display workload for all team members in a collapsible format."""
         workload_window = Toplevel(root)
         workload_window.title("Team Member Workload")
-        workload_window.geometry("600x400")
+        workload_window.geometry("600x600")
 
+        # Dictionary to track tasks grouped by team members
         member_workload = {}
+
+        # Collect all tasks and group them by team member
         for proj in projects:
             for task in proj.tasks:
-                if task.assignee:
-                    member_workload.setdefault(task.assignee.name, []).append(task.name)
+                if task.assignee and task.assignee.name:  # Ensure task has a valid assignee
+                    if task.assignee.name not in member_workload:
+                        member_workload[task.assignee.name] = []
+                    member_workload[task.assignee.name].append(f"{task.name} (Project: {proj.name})")
 
+        # Handle case where no tasks are assigned
+        if not member_workload:
+            ctk.CTkLabel(
+                workload_window,
+                text="No tasks assigned to any team members.",
+                font=("Helvetica Neue", 16),
+                text_color="black"
+            ).pack(pady=20)
+            return
+
+        # Create collapsible sections for each team member
         for member, tasks in member_workload.items():
-            ctk.CTkLabel(workload_window, text=f"{member}:", font=("Helvetica Neue", 16), text_color= "black").pack(pady=5)
+            # Frame for each team member
+            member_frame = ctk.CTkFrame(workload_window, corner_radius=10)
+            member_frame.pack(fill="x", padx=10, pady=5)
+
+            # Header for the team member
+            header = ctk.CTkLabel(
+                member_frame,
+                text=f"{member} ({len(tasks)} tasks)",
+                font=("Helvetica Neue", 16, "bold"),
+                text_color="white"
+            )
+            header.pack(anchor="w", padx=10, pady=5)
+
+            # Task list frame (hidden by default)
+            task_frame = ctk.CTkFrame(member_frame, fg_color="transparent")
+            task_frame.pack(fill="x", padx=10, pady=5)
+
+            # Populate tasks
             for task in tasks:
-                ctk.CTkLabel(workload_window, text=f"  - {task}", text_color= "black").pack()
+                ctk.CTkLabel(
+                    task_frame,
+                    text=f"  - {task}",
+                    font=("Helvetica Neue", 12),
+                    text_color="white"
+                ).pack(anchor="w", padx=10)
+
+            # Initially hide the tasks
+            task_frame.pack_forget()
+
+            # Toggle button to show/hide tasks
+            def toggle_tasks(frame=task_frame):
+                if frame.winfo_ismapped():
+                    frame.pack_forget()
+                else:
+                    frame.pack(fill="x", padx=10, pady=5)
+
+            toggle_button = ctk.CTkButton(
+                member_frame,
+                text="Show Tasks",
+                command=toggle_tasks,
+                width=100,
+                height=30,
+            )
+            toggle_button.pack(anchor="e", padx=10, pady=5)
+
+
+
+
 
     def filter_tasks():
         """Filter tasks based on their status."""
@@ -292,9 +350,8 @@ def main_window(projects, save_projects):
         """Display a list of all projects and their details."""
         view_window = Toplevel(root)
         view_window.title("View Projects")
-        view_window.geometry("800x800")
+        view_window.geometry("")
         
-
         if not projects:
             ctk.CTkLabel(view_window, text="No projects available.", font=("Helvetica Neue", 16), text_color= "black").pack(pady=20)
             return
@@ -321,6 +378,164 @@ def main_window(projects, save_projects):
             else:
                 no_tasks_label = ctk.CTkLabel(view_window, text="  No tasks added yet.", font=("Helvetica Neue", 12), text_color= "black")
                 no_tasks_label.pack(anchor="center")
+    
+    def remove_task():
+        def delete_task():
+            project_name = project_dropdown.get()
+            task_name = task_dropdown.get()
+
+            if not project_name or not task_name:
+                messagebox.showerror("Error", "Please select a project and task.")
+                return
+
+            selected_project = next((proj for proj in projects if proj.name == project_name), None)
+            if not selected_project:
+                messagebox.showerror("Error", f"Project '{project_name}' not found.")
+                return
+
+            selected_task = next((task for task in selected_project.tasks if task.name == task_name), None)
+            if not selected_task:
+                messagebox.showerror("Error", f"Task '{task_name}' not found.")
+                return
+
+            selected_project.remove_task(task_name)
+            messagebox.showinfo("Success", f"Task '{task_name}' removed.")
+            save_projects()
+            remove_window.destroy()
+
+        def update_tasks(selected_project_name):
+            selected_project = next((proj for proj in projects if proj.name == selected_project_name), None)
+
+            if selected_project and selected_project.tasks:
+                task_names = [task.name for task in selected_project.tasks]
+                task_dropdown.configure(values=task_names)
+                task_dropdown.set("")
+            else:
+                task_dropdown.configure(values=["No tasks available"])
+                task_dropdown.set("No tasks available")
+
+        remove_window = Toplevel(root)
+        remove_window.title("Remove Task")
+        remove_window.geometry("500x400")
+
+        # Project Dropdown
+        ctk.CTkLabel(remove_window, text="Select Project", text_color="black").pack(pady=10)
+        project_dropdown = ctk.CTkComboBox(
+            remove_window,
+            values=[proj.name for proj in projects],
+            command=update_tasks,
+        )
+        project_dropdown.pack(pady=5)
+
+        # Task Dropdown
+        ctk.CTkLabel(remove_window, text="Select Task", text_color="black").pack(pady=10)
+        task_dropdown = ctk.CTkComboBox(remove_window, values=[])
+        task_dropdown.pack(pady=5)
+
+        # Remove Button
+        ctk.CTkButton(remove_window, text="Remove Task", command=delete_task, fg_color="#FF3B30").pack(pady=20)
+
+        # Initialise the first project selection and its tasks
+        if projects:
+            first_project_name = projects[0].name
+            project_dropdown.set(first_project_name)
+            update_tasks(first_project_name)
+
+
+    def complete_task():
+        def mark_completed():
+            project_name = project_dropdown.get()
+            task_name = task_dropdown.get()
+
+            if not project_name or not task_name:
+                messagebox.showerror("Error", "Please select a project and task.")
+                return
+
+            selected_project = next((proj for proj in projects if proj.name == project_name), None)
+            if not selected_project:
+                messagebox.showerror("Error", f"Project '{project_name}' not found.")
+                return
+
+            selected_task = next((task for task in selected_project.tasks if task.name == task_name), None)
+            if not selected_task:
+                messagebox.showerror("Error", f"Task '{task_name}' not found.")
+                return
+
+            selected_task.status = "Completed"
+            messagebox.showinfo("Success", f"Task '{task_name}' marked as completed.")
+            save_projects()
+            complete_window.destroy()
+
+        def update_tasks(selected_project_name):
+            selected_project = next((proj for proj in projects if proj.name == selected_project_name), None)
+
+            if selected_project and selected_project.tasks:
+                task_names = [task.name for task in selected_project.tasks]
+                task_dropdown.configure(values=task_names)
+                task_dropdown.set("")
+            else:
+                task_dropdown.configure(values=["No tasks available"])
+                task_dropdown.set("No tasks available")
+
+        complete_window = Toplevel(root)
+        complete_window.title("Complete Task")
+        complete_window.geometry("500x400")
+
+        # Label and Dropdown for Project
+        ctk.CTkLabel(complete_window, text="Select Project:", text_color="black").pack(pady=10)
+        project_dropdown = ctk.CTkComboBox(
+            complete_window,
+            values=[proj.name for proj in projects],
+            command=update_tasks,
+        )
+        project_dropdown.pack(pady=5)
+
+        # Label and Dropdown for Task
+        ctk.CTkLabel(complete_window, text="Select Task:", text_color="black").pack(pady=10)
+        task_dropdown = ctk.CTkComboBox(complete_window, values=[])
+        task_dropdown.pack(pady=5)
+
+        # Complete Button with Green Color
+        ctk.CTkButton(
+            complete_window,
+            text="Complete Task",
+            command=mark_completed,
+            fg_color="#4CD964",  # Set the button's color to green
+        ).pack(pady=20)
+
+        # Initialise the first project selection and its tasks
+        if projects:
+            first_project_name = projects[0].name
+            project_dropdown.set(first_project_name)
+            update_tasks(first_project_name)
+
+        ctk.CTkButton(
+            button_frame,
+            text="Show Dashboard",
+            command=lambda: show_dashboard(root, [proj.to_dict() for proj in projects]),
+            font=("Helvetica Neue", 16),
+            corner_radius=15,
+            width=250,
+            height=50,
+        ).grid(row=row, column=column, padx=30, pady=10)
+
+    def show_dashboard():
+        dashboard_window = ctk.CTkToplevel(root)
+        dashboard_window.title("Analytics Dashboard")
+        dashboard_window.geometry("800x600")
+
+        # Create and pack the Analytics Dashboard
+        dashboard = show_analytics_visualisations(dashboard_window, projects)
+        dashboard.pack(fill="both", expand=True, padx=20, pady=20)
+
+    ctk.CTkButton(
+    root,
+    text="Show Visualisations",
+    command=lambda: show_analytics_visualisations(root, projects),
+    width=300,
+    height=50,
+    ).pack(pady=20)
+
 
     # Header Section
     header_frame = ctk.CTkFrame(root, height=80, corner_radius=15)
@@ -351,10 +566,12 @@ def main_window(projects, save_projects):
         ("View Projects", view_projects),
         ("Add Task to Project", add_task),
         ("Assign Task to Team Member", assign_task),
-        ("View Tasks in Project", view_tasks),
-        ("View Team Member Workload", view_workload),
+        ("View Tasks in Project", lambda: view_tasks(root, projects)),
+        ("View Team Member Workload", lambda: view_workload(root, projects)),
         ("Filter by Task Status", filter_tasks),
         ("Check Overdue Tasks", check_overdue),
+        ("Complete Task", complete_task),
+        ("Remove Task", remove_task),
     ]
 
     for i, (label, command) in enumerate(actions):
@@ -380,14 +597,32 @@ def main_window(projects, save_projects):
     )
     footer_label.pack(pady=10)
 
-    # Save Projects on Exit
+    after_callbacks = []  # Track scheduled callbacks
+
+    def some_function():
+        """Periodic function for updating stats."""
+        if not root.winfo_exists():  # Check if root exists
+            return
+        update_stats()
+        callback_id = root.after(1000, some_function)
+        after_callbacks.append(callback_id)
+
+    # Start periodic updates
+    callback_id = root.after(1000, some_function)
+    after_callbacks.append(callback_id)
+
     def on_exit():
+        # Save data and destroy window
         save_projects()
         root.destroy()
 
     root.protocol("WM_DELETE_WINDOW", on_exit)
 
-    # Run the Application
-    root.mainloop()
+    update_stats()
+
+    try:
+        root.mainloop()
+    except Exception as e:
+        print(f"Unhandled exception: {e}")
 
 
