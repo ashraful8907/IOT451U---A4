@@ -15,7 +15,7 @@ data_file = os.path.join(os.path.dirname(__file__), 'mock.json')  # Data file pa
 
 # Function to Load Projects from File
 def load_projects(data_file):
-    global projects
+    projects = []  # Local projects list
     try:
         project_data = load_from_json(data_file)
         for proj in project_data:
@@ -39,6 +39,7 @@ def load_projects(data_file):
         print("No saved data found. Starting fresh.")
     except (KeyError, ValueError) as e:
         print(f"Error loading data: {e}")
+    return projects
 
 # Function to Save Projects to File
 def save_projects():
