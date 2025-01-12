@@ -1,11 +1,11 @@
-# main.py 
+# main.py
 from classes import Task, Project, TeamMember
-from utils import load_from_json, save_to_json  # Utility functions for file I/O
+from utils import load_from_json, save_to_json
 import os
-from GUI import main_window  # Import the GUI function
+from GUI import main_window
 import customtkinter as ctk
 
-
+# Set scaling for customtkinter widgets and windows
 ctk.set_widget_scaling(1.0)
 ctk.set_window_scaling(1.0)
 
@@ -15,8 +15,13 @@ data_file = os.path.join(os.path.dirname(__file__), 'mock.json')  # Data file pa
 
 # Function to Load Projects from File
 def load_projects(data_file):
-    projects = []  # Local projects list
+    global projects
+    projects = []  # Reset projects list
     try:
+        if not os.path.exists(data_file):
+            print(f"File {data_file} does not exist. Creating a new file.")
+            save_to_json(data_file, [])  # Create an empty JSON file
+
         project_data = load_from_json(data_file)
         for proj in project_data:
             project = Project(
@@ -35,16 +40,20 @@ def load_projects(data_file):
                 )
                 project.add_task(task)
             projects.append(project)
-    except FileNotFoundError:
-        print("No saved data found. Starting fresh.")
-    except (KeyError, ValueError) as e:
-        print(f"Error loading data: {e}")
-    return projects
+        print(f"Loaded {len(projects)} projects from {data_file}.")
+    except Exception as e:
+        print(f"Error loading projects: {e}")
 
 # Function to Save Projects to File
 def save_projects():
-    save_to_json(data_file, [proj.to_dict() for proj in projects])
-    print("Data saved successfully.")
+    try:
+        if not projects:
+            print("No projects to save. Skipping save operation.")
+            return
+        save_to_json(data_file, [proj.to_dict() for proj in projects])
+        print(f"Saved {len(projects)} projects to {data_file}.")
+    except Exception as e:
+        print(f"Error saving projects: {e}")
 
 # Main Function
 if __name__ == "__main__":

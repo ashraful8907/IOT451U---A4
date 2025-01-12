@@ -531,6 +531,7 @@ def main_window(projects, save_projects):
     ctk.CTkButton(
     root,
     text="Show Visualisations",
+    font=("Helvetica Neue", 16),
     command=lambda: show_analytics_visualisations(root, projects),
     width=300,
     height=50,

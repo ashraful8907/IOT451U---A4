@@ -1,485 +1,326 @@
 [
     {
-        "name": "Project 1",
-        "description": "A project about project 1",
-        "deadline": "2025-04-10",
+        "name": "Website Redesign",
+        "description": "Revamp the corporate website for better user engagement.",
+        "deadline": "2025-06-17",
         "tasks": [
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 1",
-                "due_date": "2025-02-17",
-                "assignee": "Team Member 3",
-                "status": "In Progress",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 1",
-                "due_date": "2025-01-23",
-                "assignee": "Team Member 4",
-                "status": "Not Started",
+                "title": "Design Homepage",
+                "description": "Details about Design Homepage for Website Redesign.",
+                "due_date": "2025-09-16",
+                "assignee": "Dana",
+                "status": "Completed",
                 "priority": "High"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 1",
-                "due_date": "2025-01-16",
-                "assignee": "Team Member 5",
-                "status": "Not Started",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 1",
-                "due_date": "2025-03-06",
-                "assignee": "Team Member 4",
+                "title": "Develop Backend",
+                "description": "Details about Develop Backend for Website Redesign.",
+                "due_date": "2025-07-05",
+                "assignee": "Eve",
                 "status": "In Progress",
                 "priority": "Low"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 1",
-                "due_date": "2025-03-05",
-                "assignee": "Team Member 1",
+                "title": "Test Website",
+                "description": "Details about Test Website for Website Redesign.",
+                "due_date": "2025-08-09",
+                "assignee": "Charlie",
                 "status": "Completed",
-                "priority": "Low"
+                "priority": "High"
+            },
+            {
+                "title": "Launch Website",
+                "description": "Details about Launch Website for Website Redesign.",
+                "due_date": "2025-10-20",
+                "assignee": "Eve",
+                "status": "Not Started",
+                "priority": "Medium"
             }
         ]
     },
     {
-        "name": "Project 2",
-        "description": "A project about project 2",
-        "deadline": "2025-05-20",
+        "name": "Mobile App Development",
+        "description": "Develop a cross-platform mobile app for e-commerce.",
+        "deadline": "2025-03-08",
         "tasks": [
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 2",
-                "due_date": "2025-03-08",
-                "assignee": "Team Member 3",
+                "title": "Create App Wireframe",
+                "description": "Details about Create App Wireframe for Mobile App Development.",
+                "due_date": "2025-07-14",
+                "assignee": "Eve",
                 "status": "In Progress",
+                "priority": "Low"
+            },
+            {
+                "title": "Develop API Integration",
+                "description": "Details about Develop API Integration for Mobile App Development.",
+                "due_date": "2025-02-17",
+                "assignee": "Alice",
+                "status": "Not Started",
                 "priority": "Medium"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 2",
+                "title": "Test Mobile App",
+                "description": "Details about Test Mobile App for Mobile App Development.",
+                "due_date": "2025-05-14",
+                "assignee": "Charlie",
+                "status": "Not Started",
+                "priority": "High"
+            },
+            {
+                "title": "Publish on App Stores",
+                "description": "Details about Publish on App Stores for Mobile App Development.",
                 "due_date": "2025-02-23",
-                "assignee": "Team Member 2",
-                "status": "Not Started",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 2",
-                "due_date": "2025-02-13",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 2",
-                "due_date": "2025-01-16",
-                "assignee": "Team Member 2",
-                "status": "Not Started",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 2",
-                "due_date": "2025-03-02",
-                "assignee": "Team Member 3",
+                "assignee": "Eve",
                 "status": "In Progress",
-                "priority": "Low"
+                "priority": "High"
             }
         ]
     },
     {
-        "name": "Project 3",
-        "description": "A project about project 3",
-        "deadline": "2025-03-23",
+        "name": "Marketing Campaign Launch",
+        "description": "Plan and execute a marketing campaign for the new product line.",
+        "deadline": "2025-10-27",
         "tasks": [
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 3",
-                "due_date": "2025-01-15",
-                "assignee": "Team Member 3",
-                "status": "In Progress",
-                "priority": "Medium"
+                "title": "Create Ad Content",
+                "description": "Details about Create Ad Content for Marketing Campaign Launch.",
+                "due_date": "2025-05-09",
+                "assignee": "Eve",
+                "status": "Not Started",
+                "priority": "High"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 3",
-                "due_date": "2025-01-28",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "Medium"
+                "title": "Set Up Social Media Campaign",
+                "description": "Details about Set Up Social Media Campaign for Marketing Campaign Launch.",
+                "due_date": "2025-07-18",
+                "assignee": "Charlie",
+                "status": "Not Started",
+                "priority": "High"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 3",
-                "due_date": "2025-03-03",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 3",
+                "title": "Analyze Campaign Results",
+                "description": "Details about Analyze Campaign Results for Marketing Campaign Launch.",
                 "due_date": "2025-02-28",
-                "assignee": "Team Member 1",
+                "assignee": "Charlie",
                 "status": "In Progress",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 3",
-                "due_date": "2025-01-31",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "Low"
-            }
-        ]
-    },
-    {
-        "name": "Project 4",
-        "description": "A project about project 4",
-        "deadline": "2025-05-26",
-        "tasks": [
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 4",
-                "due_date": "2025-02-20",
-                "assignee": "Team Member 1",
-                "status": "Not Started",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 4",
-                "due_date": "2025-02-01",
-                "assignee": "Team Member 5",
-                "status": "Not Started",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 4",
-                "due_date": "2025-03-02",
-                "assignee": "Team Member 2",
-                "status": "In Progress",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 4",
-                "due_date": "2025-02-15",
-                "assignee": "Team Member 4",
-                "status": "In Progress",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 4",
-                "due_date": "2025-03-04",
-                "assignee": "Team Member 2",
-                "status": "Not Started",
                 "priority": "High"
             }
         ]
     },
     {
-        "name": "Project 5",
-        "description": "A project about project 5",
-        "deadline": "2025-07-03",
+        "name": "Cloud Infrastructure Setup",
+        "description": "Set up cloud infrastructure for improved scalability.",
+        "deadline": "2025-01-16",
         "tasks": [
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 5",
-                "due_date": "2025-02-27",
-                "assignee": "Team Member 4",
-                "status": "Completed",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 5",
-                "due_date": "2025-02-15",
-                "assignee": "Team Member 1",
-                "status": "Not Started",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 5",
-                "due_date": "2025-03-01",
-                "assignee": "Team Member 4",
-                "status": "Completed",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 5",
-                "due_date": "2025-02-25",
-                "assignee": "Team Member 3",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 5",
-                "due_date": "2025-02-09",
-                "assignee": "Team Member 3",
-                "status": "In Progress",
-                "priority": "Low"
-            }
-        ]
-    },
-    {
-        "name": "Project 6",
-        "description": "A project about project 6",
-        "deadline": "2025-05-24",
-        "tasks": [
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 6",
-                "due_date": "2025-02-22",
-                "assignee": "Team Member 4",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 6",
-                "due_date": "2025-02-15",
-                "assignee": "Team Member 1",
-                "status": "Not Started",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 6",
-                "due_date": "2025-03-10",
-                "assignee": "Team Member 1",
-                "status": "In Progress",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 6",
-                "due_date": "2025-02-20",
-                "assignee": "Team Member 5",
-                "status": "In Progress",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 6",
-                "due_date": "2025-01-24",
-                "assignee": "Team Member 1",
-                "status": "Completed",
-                "priority": "Medium"
-            }
-        ]
-    },
-    {
-        "name": "Project 7",
-        "description": "A project about project 7",
-        "deadline": "2025-02-09",
-        "tasks": [
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 7",
-                "due_date": "2025-03-10",
-                "assignee": "Team Member 3",
-                "status": "Not Started",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 7",
+                "title": "Migrate to AWS",
+                "description": "Details about Migrate to AWS for Cloud Infrastructure Setup.",
                 "due_date": "2025-01-19",
-                "assignee": "Team Member 2",
-                "status": "Not Started",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 7",
-                "due_date": "2025-01-16",
-                "assignee": "Team Member 5",
-                "status": "Not Started",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 7",
-                "due_date": "2025-01-22",
-                "assignee": "Team Member 1",
-                "status": "Not Started",
-                "priority": "Medium"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 7",
-                "due_date": "2025-01-24",
-                "assignee": "Team Member 1",
+                "assignee": "Eve",
                 "status": "Completed",
-                "priority": "Low"
-            }
-        ]
-    },
-    {
-        "name": "Project 8",
-        "description": "A project about project 8",
-        "deadline": "2025-06-03",
-        "tasks": [
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 8",
-                "due_date": "2025-02-21",
-                "assignee": "Team Member 4",
-                "status": "Not Started",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 8",
-                "due_date": "2025-01-15",
-                "assignee": "Team Member 4",
-                "status": "Not Started",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 8",
-                "due_date": "2025-01-11",
-                "assignee": "Team Member 5",
-                "status": "In Progress",
                 "priority": "Medium"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 8",
-                "due_date": "2025-02-17",
-                "assignee": "Team Member 3",
-                "status": "Not Started",
+                "title": "Set Up CI/CD Pipeline",
+                "description": "Details about Set Up CI/CD Pipeline for Cloud Infrastructure Setup.",
+                "due_date": "2025-01-28",
+                "assignee": "Alice",
+                "status": "In Progress",
                 "priority": "High"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 8",
-                "due_date": "2025-02-15",
-                "assignee": "Team Member 4",
-                "status": "In Progress",
-                "priority": "Low"
-            }
-        ]
-    },
-    {
-        "name": "Project 9",
-        "description": "A project about project 9",
-        "deadline": "2025-03-29",
-        "tasks": [
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 9",
-                "due_date": "2025-02-17",
-                "assignee": "Team Member 5",
-                "status": "In Progress",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 9",
+                "title": "Monitor Cloud Usage",
+                "description": "Details about Monitor Cloud Usage for Cloud Infrastructure Setup.",
                 "due_date": "2025-03-09",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 9",
-                "due_date": "2025-03-01",
-                "assignee": "Team Member 1",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 9",
-                "due_date": "2025-02-08",
-                "assignee": "Team Member 5",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 9",
-                "due_date": "2025-02-27",
-                "assignee": "Team Member 2",
-                "status": "Completed",
+                "assignee": "Alice",
+                "status": "In Progress",
                 "priority": "Low"
             }
         ]
     },
     {
-        "name": "Project 10",
-        "description": "A project about project 10",
-        "deadline": "2025-07-01",
+        "name": "Cybersecurity Enhancement",
+        "description": "Strengthen company security to mitigate data breaches.",
+        "deadline": "2025-09-23",
         "tasks": [
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 1 for project 10",
-                "due_date": "2025-02-04",
-                "assignee": "Team Member 5",
+                "title": "Conduct Vulnerability Assessment",
+                "description": "Details about Conduct Vulnerability Assessment for Cybersecurity Enhancement.",
+                "due_date": "2025-04-10",
+                "assignee": "Eve",
+                "status": "Completed",
+                "priority": "High"
+            },
+            {
+                "title": "Install Advanced Firewalls",
+                "description": "Details about Install Advanced Firewalls for Cybersecurity Enhancement.",
+                "due_date": "2025-02-21",
+                "assignee": "Alice",
+                "status": "Completed",
+                "priority": "Medium"
+            },
+            {
+                "title": "Train Employees on Security Practices",
+                "description": "Details about Train Employees on Security Practices for Cybersecurity Enhancement.",
+                "due_date": "2025-01-15",
+                "assignee": "Alice",
+                "status": "Completed",
+                "priority": "High"
+            }
+        ]
+    },
+    {
+        "name": "Data Analytics Platform",
+        "description": "Build a data analytics platform to gather insights.",
+        "deadline": "2025-11-16",
+        "tasks": [
+            {
+                "title": "Develop Data Ingestion Pipelines",
+                "description": "Details about Develop Data Ingestion Pipelines for Data Analytics Platform.",
+                "due_date": "2025-09-06",
+                "assignee": "Charlie",
+                "status": "Not Started",
+                "priority": "Low"
+            },
+            {
+                "title": "Create Dashboards",
+                "description": "Details about Create Dashboards for Data Analytics Platform.",
+                "due_date": "2025-08-23",
+                "assignee": "Dana",
+                "status": "Completed",
+                "priority": "High"
+            },
+            {
+                "title": "Integrate Predictive Analytics",
+                "description": "Details about Integrate Predictive Analytics for Data Analytics Platform.",
+                "due_date": "2025-10-03",
+                "assignee": "Alice",
+                "status": "Completed",
+                "priority": "High"
+            }
+        ]
+    },
+    {
+        "name": "HR Management System",
+        "description": "Develop an HRMS for employee management and payroll.",
+        "deadline": "2025-08-06",
+        "tasks": [
+            {
+                "title": "Gather HR Requirements",
+                "description": "Details about Gather HR Requirements for HR Management System.",
+                "due_date": "2025-07-28",
+                "assignee": "Dana",
+                "status": "Completed",
+                "priority": "Low"
+            },
+            {
+                "title": "Develop Payroll Module",
+                "description": "Details about Develop Payroll Module for HR Management System.",
+                "due_date": "2025-12-01",
+                "assignee": "Bob",
+                "status": "In Progress",
+                "priority": "High"
+            },
+            {
+                "title": "Test Leave Management",
+                "description": "Details about Test Leave Management for HR Management System.",
+                "due_date": "2025-09-22",
+                "assignee": "Charlie",
+                "status": "Not Started",
+                "priority": "Low"
+            }
+        ]
+    },
+    {
+        "name": "Customer Support System",
+        "description": "Set up a support system to enhance customer experience.",
+        "deadline": "2025-02-16",
+        "tasks": [
+            {
+                "title": "Set Up Help Desk",
+                "description": "Details about Set Up Help Desk for Customer Support System.",
+                "due_date": "2025-12-21",
+                "assignee": "Alice",
+                "status": "In Progress",
+                "priority": "Low"
+            },
+            {
+                "title": "Develop Ticketing System",
+                "description": "Details about Develop Ticketing System for Customer Support System.",
+                "due_date": "2025-08-18",
+                "assignee": "Dana",
                 "status": "In Progress",
                 "priority": "Medium"
             },
             {
-                "title": "Unnamed Task",
-                "description": "Details about task 2 for project 10",
-                "due_date": "2025-02-16",
-                "assignee": "Team Member 3",
+                "title": "Train Support Team",
+                "description": "Details about Train Support Team for Customer Support System.",
+                "due_date": "2025-05-03",
+                "assignee": "Alice",
                 "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 3 for project 10",
-                "due_date": "2025-02-13",
-                "assignee": "Team Member 4",
-                "status": "Completed",
-                "priority": "Low"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 4 for project 10",
-                "due_date": "2025-02-17",
-                "assignee": "Team Member 4",
-                "status": "In Progress",
-                "priority": "High"
-            },
-            {
-                "title": "Unnamed Task",
-                "description": "Details about task 5 for project 10",
-                "due_date": "2025-01-19",
-                "assignee": "Team Member 2",
-                "status": "In Progress",
                 "priority": "Low"
             }
         ]
     },
     {
-        "name": "hey",
-        "description": "hey",
-        "deadline": "2025-02-01",
+        "name": "E-Commerce Platform Upgrade",
+        "description": "Upgrade the existing e-commerce platform with new features.",
+        "deadline": "2025-06-12",
         "tasks": [
             {
-                "title": "do this",
-                "description": "no",
-                "due_date": "2025-01-01",
-                "assignee": null,
+                "title": "Add Payment Gateways",
+                "description": "Details about Add Payment Gateways for E-Commerce Platform Upgrade.",
+                "due_date": "2025-07-08",
+                "assignee": "Alice",
                 "status": "Not Started",
+                "priority": "High"
+            },
+            {
+                "title": "Develop Wishlist Feature",
+                "description": "Details about Develop Wishlist Feature for E-Commerce Platform Upgrade.",
+                "due_date": "2025-10-14",
+                "assignee": "Bob",
+                "status": "In Progress",
+                "priority": "Low"
+            },
+            {
+                "title": "Improve Site Performance",
+                "description": "Details about Improve Site Performance for E-Commerce Platform Upgrade.",
+                "due_date": "2025-10-01",
+                "assignee": "Charlie",
+                "status": "Not Started",
+                "priority": "High"
+            }
+        ]
+    },
+    {
+        "name": "Internal Knowledge Base",
+        "description": "Develop an internal knowledge base for employees.",
+        "deadline": "2025-09-28",
+        "tasks": [
+            {
+                "title": "Organize Documentation",
+                "description": "Details about Organize Documentation for Internal Knowledge Base.",
+                "due_date": "2025-05-25",
+                "assignee": "Dana",
+                "status": "Not Started",
+                "priority": "Medium"
+            },
+            {
+                "title": "Set Up Knowledge Base Software",
+                "description": "Details about Set Up Knowledge Base Software for Internal Knowledge Base.",
+                "due_date": "2025-06-25",
+                "assignee": "Bob",
+                "status": "Completed",
+                "priority": "Low"
+            },
+            {
+                "title": "Train Employees on Usage",
+                "description": "Details about Train Employees on Usage for Internal Knowledge Base.",
+                "due_date": "2025-08-18",
+                "assignee": "Dana",
+                "status": "Completed",
                 "priority": "Medium"
             }
         ]
